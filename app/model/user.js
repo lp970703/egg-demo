@@ -26,6 +26,14 @@ module.exports = app => {
       allowNull: true,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
+    phone: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
   }, {
     tableName: 'user',
   });

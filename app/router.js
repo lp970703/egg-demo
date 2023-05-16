@@ -31,4 +31,6 @@ module.exports = app => {
   router.post('/api/user/authenticate', app.oAuth2Server.authenticate(), ctx => {
     ctx.body = ctx.state.oauth;
   });
+
+  router.post('/api/v1/user/register', controller.user.registerUser);
 };

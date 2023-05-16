@@ -9,6 +9,7 @@ class BaseService extends Service {
     this.AppConfig = this.ctx.app.config.appConfig;
     this.Helper = this.ctx.helper;
     this.Enums = this.ctx.app.config.enums;
+    this.model = this.app.model;
   }
 
   _base_buildRes(data, message = '成功', status = 200) {
