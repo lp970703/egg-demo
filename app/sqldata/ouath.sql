@@ -15,11 +15,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- 导出 myproject 的数据库结构
-CREATE DATABASE IF NOT EXISTS `myproject` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `myproject`;
+-- 导出 egg-ouath-login 的数据库结构
+CREATE DATABASE IF NOT EXISTS `egg-ouath-login` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `egg-ouath-login`;
 
--- 导出  表 myproject.authcode 结构
+-- 导出  表 egg-ouath-login.authcode 结构
 CREATE TABLE IF NOT EXISTS `authcode` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `code` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '授权码',
@@ -29,28 +29,33 @@ CREATE TABLE IF NOT EXISTS `authcode` (
   `clientId` varchar(200) DEFAULT NULL,
   `userId` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  myproject.authcode 的数据：~0 rows (大约)
+-- 正在导出表  egg-ouath-login.authcode 的数据：~0 rows (大约)
 
--- 导出  表 myproject.client 结构
+-- 导出  表 egg-ouath-login.client 结构
 CREATE TABLE IF NOT EXISTS `client` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `clientId` varchar(200) DEFAULT NULL,
+  `clientId` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '原来是唯一的，但是我觉得一个客户端可以创建多个user，所以不能做成唯一',
   `userId` varchar(200) DEFAULT NULL,
   `clientSecret` varchar(200) DEFAULT NULL,
   `redirectUri` varchar(200) DEFAULT NULL COMMENT '客户端的回调 URL',
   `grants` varchar(200) DEFAULT NULL COMMENT '授权模式，比如授权码模式',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `clientId` (`clientId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  myproject.client 的数据：~2 rows (大约)
+-- 正在导出表  egg-ouath-login.client 的数据：~7 rows (大约)
 INSERT INTO `client` (`id`, `clientId`, `userId`, `clientSecret`, `redirectUri`, `grants`) VALUES
-	(1, 'clientadmin', 'useradmin', '131002', 'http://127.0.0.1:7001/', 'authorization_code,refresh_token,password'),
-	(4, 'clientPasswordAdmin', 'passwordLoginAdmin', '131002', 'http://127.0.0.1:7001/', 'password');
+	(1, 'clientadmin', 'useradmin', '131002', 'http://127.0.0.1:7001/ouath2', 'authorization_code,refresh_token,password'),
+	(4, 'clientPasswordAdmin', 'passwordLoginAdmin', '131002', 'http://127.0.0.1:7001/ouath2', 'password'),
+	(5, 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc', 'DCAQDHZV', 'http://127.0.0.1:7001/ouath2', 'password'),
+	(7, NULL, '8508f6232c74486db29c5fc8ad9467f0', 'DCAQDHZV', 'http://127.0.0.1:7001/ouath2', 'password'),
+	(8, 'ffmepg_demo', '7b34dc0a050841a68aa218bbabaae246', 'DCAQDHZV', 'http://127.0.0.1:7001/ouath2', 'password'),
+	(9, 'ffmepg_demo', '6d9c5f07b9534baeba14af7b36b9f59a', 'DCAQDHZV', 'http://127.0.0.1:7001/ouath2', NULL),
+	(10, 'ffmepg_demo', '8e570bdd6a8c46c49f9c66cdf97663b8', 'DCAQDHZV', 'http://127.0.0.1:7001/ouath2', NULL),
+	(11, 'ffmepg_demo', '2d51e3d782804d6080baa9710e5ef05d', 'DCAQDHZV', 'http://127.0.0.1:7001/ouath2', NULL);
 
--- 导出  表 myproject.refreshtoken 结构
+-- 导出  表 egg-ouath-login.refreshtoken 结构
 CREATE TABLE IF NOT EXISTS `refreshtoken` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `token` varchar(200) DEFAULT NULL,
@@ -60,9 +65,9 @@ CREATE TABLE IF NOT EXISTS `refreshtoken` (
   `userId` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `token` (`token`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  myproject.refreshtoken 的数据：~69 rows (大约)
+-- 正在导出表  egg-ouath-login.refreshtoken 的数据：~79 rows (大约)
 INSERT INTO `refreshtoken` (`id`, `token`, `expiresAt`, `scope`, `clientId`, `userId`) VALUES
 	(10, '279fbd399addec45d13b128a0a4b8a729f3ac47b', '2023-04-07 06:34:19', 'write', 'clientadmin', 'useradmin'),
 	(11, '0bbd8ba1d18b04adc448b80acffe84d4513098d7', '2023-04-07 06:45:24', 'write', 'clientadmin', 'useradmin'),
@@ -135,9 +140,16 @@ INSERT INTO `refreshtoken` (`id`, `token`, `expiresAt`, `scope`, `clientId`, `us
 	(78, '9493e2b59970ea40de3aaed3a78c5f443d220675', '2023-05-22 08:39:16', '', 'clientadmin', 'useradmin'),
 	(79, '3f71dccd00d0c33aa0033b10a2ed8057b2a4a400', '2023-05-22 09:48:40', '', 'clientadmin', 'useradmin'),
 	(80, 'c69a44f361ec5b70feca52553db8409100558721', '2023-05-22 10:04:41', '', 'clientadmin', 'useradmin'),
-	(81, 'e60d3fb982838a82ad830377e169a0d0700e28ef', '2023-05-22 10:09:55', '', 'clientadmin', 'useradmin');
+	(81, 'e60d3fb982838a82ad830377e169a0d0700e28ef', '2023-05-22 10:09:55', '', 'clientadmin', 'useradmin'),
+	(82, '25570dccf5c3576e4ce42267ff0f70ceeef2e815', '2023-05-23 08:52:37', 'write', 'clientadmin', 'useradmin'),
+	(83, 'a3f1209497a6fb6c760dc3d8429325624d00ec77', '2023-05-23 09:44:24', 'write', 'clientadmin', 'useradmin'),
+	(84, '640db85e71e743ed09a73a68d93910aa8b094ef2', '2023-05-24 09:35:27', '', 'clientadmin', 'useradmin'),
+	(85, '9521b888f55523bbe2c7d30c6a79af2988474738', '2023-05-25 09:36:17', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc'),
+	(86, '63ff7467b076a08a8ab5d1abe1056142b83c0e99', '2023-05-26 01:49:03', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc'),
+	(87, 'cb6c4e440b3570eecb139c0a6bf7567e23c32df3', '2023-05-26 02:10:44', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc'),
+	(88, 'af36c0fe2babd3ee7ca7e32724bc6596f12f74a5', '2023-05-26 09:20:10', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc');
 
--- 导出  表 myproject.token 结构
+-- 导出  表 egg-ouath-login.token 结构
 CREATE TABLE IF NOT EXISTS `token` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `token` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '访问令牌',
@@ -147,9 +159,9 @@ CREATE TABLE IF NOT EXISTS `token` (
   `userId` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `token` (`token`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  myproject.token 的数据：~69 rows (大约)
+-- 正在导出表  egg-ouath-login.token 的数据：~79 rows (大约)
 INSERT INTO `token` (`id`, `token`, `expiresAt`, `scope`, `clientId`, `userId`) VALUES
 	(10, 'c316dea1084243e9daf5b59bbef55485563ac589', '2023-03-24 07:34:19', 'write', 'clientadmin', 'useradmin'),
 	(11, '5f1f2c0370dd295697501e49e975573997b43e9a', '2023-03-24 07:45:24', 'write', 'clientadmin', 'useradmin'),
@@ -222,22 +234,37 @@ INSERT INTO `token` (`id`, `token`, `expiresAt`, `scope`, `clientId`, `userId`) 
 	(78, 'b9cf97b8269804f153c04fa85dffdb90622f74e3', '2023-05-08 09:39:16', '', 'clientadmin', 'useradmin'),
 	(79, '1281897dec24da481fc64055bab8d46c5b2d7961', '2023-05-08 10:48:40', '', 'clientadmin', 'useradmin'),
 	(80, 'be55bcff680b209dec505aafe264042126208531', '2023-05-08 11:04:41', '', 'clientadmin', 'useradmin'),
-	(81, '28f5ebc608caa6fd440c762fd0f1fa429ac379e6', '2023-05-08 11:09:55', '', 'clientadmin', 'useradmin');
+	(81, '28f5ebc608caa6fd440c762fd0f1fa429ac379e6', '2023-05-08 11:09:55', '', 'clientadmin', 'useradmin'),
+	(82, '0675e62dd6b772d1395df0e755fc7607a645acec', '2023-05-09 09:52:37', 'write', 'clientadmin', 'useradmin'),
+	(83, 'cd6aa7e0a17edd05ff826883839ae01076ccd3a3', '2023-05-09 10:44:24', 'write', 'clientadmin', 'useradmin'),
+	(84, '06aaec26486cd6a15f065127900eeb831d8b7b2b', '2023-05-10 10:35:27', '', 'clientadmin', 'useradmin'),
+	(85, '325beadea835dc064814dccbebc949eb4ff8d6f4', '2023-05-11 10:36:17', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc'),
+	(86, 'cace93c3ddd1c05babfea1ee1bd286ec3fcaf242', '2023-05-12 02:49:03', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc'),
+	(87, 'f9914a31cacad15a76c082d5f3f0cfdbf699ba3a', '2023-05-12 03:10:44', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc'),
+	(88, 'a1f640adfc224f7ee1b172275d01154b48cd7a68', '2023-05-12 10:20:10', '', 'ffmepg_demo', 'd16ed9b0dcca4083ada0461b3298bacc');
 
--- 导出  表 myproject.user 结构
+-- 导出  表 egg-ouath-login.user 结构
 CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `userId` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `phone` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  myproject.user 的数据：~1 rows (大约)
-INSERT INTO `user` (`id`, `userId`, `username`, `password`, `createAt`) VALUES
-	(1, 'useradmin', 'lopez', 'Lupeng0703', '2023-03-20 03:14:29'),
-	(6, 'passwordLoginAdmin', 'lopezPassword', 'Lupeng0703', '2023-03-27 02:17:46');
+-- 正在导出表  egg-ouath-login.user 的数据：~7 rows (大约)
+INSERT INTO `user` (`id`, `userId`, `username`, `password`, `createAt`, `phone`, `email`) VALUES
+	(1, 'useradmin', 'lopez', 'Lupeng0703', '2023-03-20 03:14:29', NULL, NULL),
+	(6, 'passwordLoginAdmin', 'lopezPassword', 'Lupeng0703', '2023-03-27 02:17:46', NULL, NULL),
+	(7, 'd16ed9b0dcca4083ada0461b3298bacc', 'lopez1', 'lopez1', '2023-05-10 09:32:05', '15649872645', '1277838445@qq.com'),
+	(9, '8508f6232c74486db29c5fc8ad9467f0', 'lopez2', 'lopez2', '2023-05-10 10:06:26', '15534001373', '1277838445@qq.com'),
+	(10, '7b34dc0a050841a68aa218bbabaae246', 'lopez3', 'lopez3', '2023-05-10 10:07:45', '15534002373', '1277838445@qq.com'),
+	(11, '6d9c5f07b9534baeba14af7b36b9f59a', 'lopez166', 'lopez166', '2023-05-15 09:24:20', '15364824675', '14561@qq.com'),
+	(12, '8e570bdd6a8c46c49f9c66cdf97663b8', 'lopez', 'Lupeng0703', '2023-05-15 09:31:54', '15534001372', '1277838445@qq.com'),
+	(13, '2d51e3d782804d6080baa9710e5ef05d', '1', '1', '2023-05-15 10:11:45', '15534001322', '1277838445@qq.com');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
