@@ -48,6 +48,7 @@
 
 *   将sqldata中的最新版ouath.sql导入到HeidSQL中
 *   ctrl+F搜索，将数据库名字重命名（将"egg-ouath-login"全部替换自己项目的名字），修改完成后运行
+    ![](https://github.com/lp970703/egg-demo/raw/master/app/public/%E6%9C%AC%E5%9C%B0sql%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E5%88%B0HeidSQL%E6%88%AA%E5%9B%BE.png)
 *   回到项目中去，修改config.default.js数据库连接的信息，修改config.sequelize对象
 *   新建.sequelizerc（项目若有就不用新建了），并修改生成model的位置
 *   运行下面代码，初始化Migrations 配置文件和目录
